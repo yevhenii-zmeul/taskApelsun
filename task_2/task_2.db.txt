@@ -1,0 +1,35 @@
+﻿Для второго задания была создана DB debts, которая состоит из 2х таблиц:
+
+users:
+- id_user int(11) A_I -> уникальный идентификатор пользователя
+- name varchar(125) -> имя пользователя
+
+user_transaction:
+- id_transaction int(11) A_I ->уникальный идентификатор транзакции
+- id_borrower int(11) ->идентификатор того кто получил займ
+- id_lender int(11) ->идентификатор того кто выдал займ
+- amount decimal(10, 5) -> сумма займа
+- date date -> дата транзакции
+
+Примеры запросов:
+
+1) для того чтобы узнать, сколько Человек 1 должен Человеку 3:
+
+SELECT SUM(amount) FROM `user_transaction` WHERE id_borrower = 1 AND id_lender = 3
+
+2) для внесения записи об очередном займе,
+как пример Человек 2 берет в займы у Человек 3 сумму 504.78, а дата сделки - 2018-09-20:
+
+INSERT INTO `user_transaction`(`id_transaction`, `id_borrower`, `id_lender`, `amount`, `date`) VALUES (null, 2, 3, 504.78, "2018-09-20")
+
+3) узнать все транзакции только за 19.09:
+
+SELECT * FROM `user_transaction` WHERE date="2018-09-19"
+
+4) удалить транзакцию:
+
+DELETE FROM `user_transaction` WHERE id_transaction = 2
+
+5) все транзакции на сумму от 200 до 500:
+
+SELECT * FROM `user_transaction` WHERE amount BETWEEN 200 AND 500
